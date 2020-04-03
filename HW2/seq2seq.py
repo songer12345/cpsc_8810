@@ -467,7 +467,7 @@ keep_probability = 0.7
 # In[25]:
 
 
-save_path = 'checkpoints/dev'
+save_path = '../checkpoints/dev'
 
 train_graph = tf.Graph()
 with train_graph.as_default():
@@ -538,14 +538,14 @@ source_test=load_data(source_test_path)
 # In[19]:
 
 
-cd /home/liao5/dataset
+cd dataset
 
 
 # In[20]:
 
 
 def save_params(params):
-    with open('params.p', 'wb') as out_file:
+    with open('../params2.p', 'wb') as out_file:
         pickle.dump(params, out_file)
 
 
@@ -578,18 +578,6 @@ def model_testing():
     proc = subprocess.Popen(['python', 'bleu_eval.py',  '../result.txt'], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
     point= float(proc.communicate()[0].split()[-1])
     print(point)
-    
-    global maxpoint
-    if point > maxpoint:
-        maxpoint = point
-        f=open('../result_max_'+str(maxpoint)+'.txt','w')
-        for i in range(0,len(result)):
-            f.write(filenames[i][:-4])
-            f.write(',')
-            f.write(" ".join([int_to_vocab[j] for j in result[i]]).replace(' <PAD>',''))
-            f.write('\n')
-        f.close()
-        print('max point is:'+  str(maxpoint))
 
 
 # In[ ]:
